@@ -1,2 +1,2 @@
 # PicoStation
-Monitor environment metrics using Raspberry Pi Pico
+Monitor your environment using Raspberry Pi Pico.
