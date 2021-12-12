@@ -6,6 +6,7 @@ namespace PicoStation.Api.Services;
 public class SerialPortService
 {
     private readonly ILogger<SerialPortService> _logger;
+    private readonly SerialPortServiceOptions _options;
     private readonly SerialPort _port;
 
     public SerialPortService(
@@ -13,8 +14,7 @@ public class SerialPortService
         IOptions<SerialPortServiceOptions> options)
     {
         _logger = logger;
-
-        ArgumentNullException.ThrowIfNull(options?.Value);
+        _options = options?.Value ?? throw new ArgumentNullException(nameof(options));
         _port = GetSerialPort(options.Value);
     }
 
@@ -29,7 +29,9 @@ public class SerialPortService
             _port.WriteLine(command);
 
             _logger.LogDebug($"Reading response from serial port '{_port.PortName}'.");
-            _port.ReadLine();
+            if (_options.IgnoreFirstLineInResponse)
+                _port.ReadLine();
+
             return _port.ReadTo(endOfResponse);
         }
         finally

@@ -28,4 +28,6 @@ public class SerialPortServiceOptions
     public SerialPortEncoding Encoding { get; set; } = SerialPortEncoding.ASCII;
 
     public string NewLine { get; set; } = "\n";
+
+    public bool IgnoreFirstLineInResponse { get; set; } = false;
 }
