@@ -21,6 +21,8 @@ public class PrometheusService
     public string GetMetrics()
     {
         _logger.LogDebug("Reading Prometheus metrics from serial port.");
-        return _serialPortService.SendCommand(_options.SerialPortCommand, _options.SerialPortEndOfResponse);
+        return _serialPortService
+            .SendCommand(_options.SerialPortCommand, _options.SerialPortEndOfResponse)
+            .Replace("\r", string.Empty);
     }
 }
